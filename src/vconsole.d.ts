@@ -9,10 +9,7 @@ declare module 'vconsole' {
     theme?: 'light' | 'dark'
   }
 
-  /**
-   * VConsole
-   * @see https://github.com/Tencent/vConsole/blob/dev/doc/public_properties_methods.md
-   */
+
   export class VConsoleInstance {
     constructor (config?: VConsoleConfig)
 
