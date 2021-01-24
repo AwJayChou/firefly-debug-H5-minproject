@@ -1,8 +1,3 @@
-/**
- * VConsole type definitions
- * @see https://github.com/Tencent/vConsole
- */
-
 declare module 'vconsole' {
   // VConsole configs
   export interface VConsoleConfig {
