@@ -129,6 +129,7 @@ class VConsoleLogTab extends VConsolePlugin {
       $.removeClass($log, 'vc-log-partly-info');
       $.removeClass($log, 'vc-log-partly-warn');
       $.removeClass($log, 'vc-log-partly-error');
+      $.removeClass($log, 'vc-log-partly-jsApi');
       if (logType == 'all') {
         $.removeClass($log, 'vc-log-partly');
       } else {
