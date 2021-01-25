@@ -54,7 +54,9 @@ class VConsole {
     };
 
     this.activedTab = '';
+    // 一级级tab标签内容
     this.tabList = [];
+    // 所有注册的插件
     this.pluginList = {};
 
     this.switchPos = {
@@ -79,6 +81,7 @@ class VConsole {
     }
 
     // add built-in plugins
+    // 也是调用addPlugin 到 pluginList中 初始化默认plugin
     this._addBuiltInPlugins();
 
     // try to init
@@ -86,9 +89,12 @@ class VConsole {
       if (that.isInited) {
         return;
       }
+      // 这三个方法都是和switch相关的
       that._render();
       that._mockTap();
       that._bindEvent();
+      // end
+      // 初始化plugin
       that._autoRun();
     };
     if (document !== undefined) {
@@ -466,6 +472,7 @@ class VConsole {
       let $tabbar = $.render(tplTabbar, {id: plugin.id, name: plugin.name});
       $.one('.vc-tabbar', that.$dom).insertAdjacentElement('beforeend', $tabbar);
       // render tabbox
+      // vc-logbox __vc_log_storage 渲染body内容
       let $tabbox = $.render(tplTabbox, {id: plugin.id});
       if (!!tabboxHTML) {
         if (tool.isString(tabboxHTML)) {
@@ -473,6 +480,7 @@ class VConsole {
         } else if (tool.isFunction(tabboxHTML.appendTo)) {
           tabboxHTML.appendTo($tabbox);
         } else if (tool.isElement(tabboxHTML)) {
+          // 加入tabbox.html vc-log
           $tabbox.insertAdjacentElement('beforeend', tabboxHTML);
         }
       }
@@ -486,6 +494,7 @@ class VConsole {
       let $topbar = $.one('.vc-topbar', that.$dom);
       for (let i=0; i<btnList.length; i++) {
         let item = btnList[i];
+        // render 就是渲染成html
         let $item = $.render(tplTopBarItem, {
           name: item.name || 'Undefined',
           className: item.className || '',
@@ -502,6 +511,7 @@ class VConsole {
             if (enable === false) {
               // do nothing
             } else {
+              // id标记为一个group
               $.removeClass($.all('.vc-topbar-' + plugin.id), 'vc-actived');
               $.addClass($item, 'vc-actived');
             }

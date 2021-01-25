@@ -132,7 +132,7 @@ class VConsoleStorageTab extends VConsolePlugin {
       default:
         return false;
     }
-
+    // vc-log的内容是每次动态渲染的 this.$tabbox就是一开始renderTab加入的元素
     let $log = $.one('.vc-log', this.$tabbox);
     if (list.length == 0) {
       $log.innerHTML = '';
