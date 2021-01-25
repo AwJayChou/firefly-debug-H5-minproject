@@ -1,13 +1,3 @@
-/*
-Tencent is pleased to support the open source community by making vConsole available.
-
-Copyright (C) 2017 THL A29 Limited, a Tencent company. All rights reserved.
-
-Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-http://opensource.org/licenses/MIT
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-*/
 
 /**
  * vConsole Storage Plugin
@@ -24,7 +14,8 @@ class VConsoleStorageTab extends VConsolePlugin {
 
   constructor(...args) {
     super(...args);
-
+    // 这里的tabbox是真正content的内容
+    // 会被core.js创建的wrapper包裹
     this.$tabbox = $.render(tplTabbox, {});
     this.currentType = ''; // cookies, localstorage, ...
     this.typeNameMap = {
@@ -33,7 +24,13 @@ class VConsoleStorageTab extends VConsolePlugin {
       'sessionstorage': 'SessionStorage'
     }
   }
-
+  /**
+   * onRenderTab这个名字听起来可能会有误解
+   * 其实是tab和body一起渲染 
+   * callback参数就是真正要渲染的body
+   * @param {*} callback 
+   * 
+   */
   onRenderTab(callback) {
     callback(this.$tabbox);
   }
@@ -43,6 +40,13 @@ class VConsoleStorageTab extends VConsolePlugin {
     let types = ['Cookies', 'LocalStorage', 'SessionStorage'];
     let btnList = [];
     for (let i = 0; i < types.length; i++) {
+      /**
+       * btnList 
+       * name 按钮的名字
+       * data data-key的名字 通过dataset.type取值
+       * onClick 点击后触发效果
+       * classname 设置默认选中状态
+       */
       btnList.push({
         name: types[i],
         data: {
@@ -51,6 +55,7 @@ class VConsoleStorageTab extends VConsolePlugin {
         className: '',
         onClick: function() {
           if (!$.hasClass(this, 'vc-actived')) {
+            // 这个this就是上面btnList中dataType topBar比如说 Session按钮绑定的dataset
             that.currentType = this.dataset.type;
             that.renderStorage();
           } else {
